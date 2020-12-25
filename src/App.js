@@ -1,5 +1,5 @@
-import { FormularioCadastro } from "./components/FormularioCadastro";
-import { ListaDeNotas } from "./components/ListaDeNotas";
+import FormularioCadastro from "./components/FormularioCadastro";
+import ListaDeNotas from "./components/ListaDeNotas";
 
 function App() {
   return (
