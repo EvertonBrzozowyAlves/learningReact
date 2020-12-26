@@ -1,70 +1,114 @@
-# Getting Started with Create React App
+# REACT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+O React é uma biblioteca Javascript criada pelo Facebook, para desenvolvimento de interfaces de usuário.  
 
-## Available Scripts
+## JSX 
+O JSX é uma sintaxe que permite criar código muito semelhante a HTML dentro do Javascript.  
 
-In the project directory, you can run:
+```jsx
+function App() {
+  return (
+    <h1>Testing React</h1>
+  )
+}
+```
 
-### `npm start`
+Apesar de não ser necessário para usar o React, ele é amplamente utilizado para desenvolvimento usando React.  
+Uma aplicação base do React, criada com o comando **npx create-react-app** já vem com uma estrutura base.  
+Parte dessa estrutura já monta uma página html base dentro da pasta **public**, então não precisamos nos preocupar em criar tags de estrutura da página.  
+Quando escrevemos código JSX, é feito um processo para compilar esse código em algo que o navegador entenda.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Dentro de um componente JSX, podemos retornar apenas um elemento pai.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Componentes
 
-### `npm test`
+Componentes são classes que criamos para representar trechos de código e que podem ser reaproveitados.  
+Estrutura básica de um componente:  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```jsx
+import { Component } from "react";
 
-### `npm run build`
+export class CardNota extends Component {
+    render() {
+        return (
+            <section>
+                <header>
+                    <h3>Título</h3>
+                </header>
+                <p>Escreva sua nota</p>
+            </section>
+        )
+    }
+}
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para utilizar o componente:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```jsx
+<li>
+    <CardNota />
+</li>
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Quando um componente pode gerar vários itens, utilizando um loop, por exemplo, é necessário que eles tenham um identificador único.  
+Usamos a propriedade **key** para definir esse identificador:
 
-### `npm run eject`
+```jsx
+    return (
+        <ul>
+            {Array.of("Note A", "Note B", "Note C").map((subject, index) => {
+                return (
+                    <li key={index}>
+                        <div>{subject}</div>
+                        <CardNota />
+                    </li>
+                )
+            })}
+        </ul>
+    )
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Estilização
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Para adicionar estilo aos componentes, o ideal é criar uma pasta para o componente, e criar um arquivo css nessa pasta.  
+Esse arquivo deve ser referenciado no arquivo .jsx com a sintaxe de import, para a classe funcionar.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```jsx
+import './CardNota.css'
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Depois, basta usar as classes criadas no css com o atributo className do React:
 
-## Learn More
+```jsx
+<section className="card-nota">
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+No processo de transpilação do código para html, os arquivos css são transformados em um bundle e ficam disponíveis para toda a aplicação.  
+Isso faz com que todos os elementos tenham acesso as classes estilos definidos, mesmo não sendo importado no arquivo .jsx em tempo de desenvolvimento.  
+Para evitar esse tipo de conflito, o ideal é prefixar as classes com o nome dos componentes.  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```css
+.card-nota_section{
+    color: red;
+}
+```
+```jsx
+<section className="card-nota_section">
+```
 
-### Code Splitting
+Arquivos de imagens, css globais e outros podem ser adicionados a uma pasta assests, dentro de src.  
+Podemos usar a técnica de *barrel* para diminuir o tamanho dos imports e controlar melhor o que é exportado de cada módulo.  
+Para isso, crie um arquivo index.js em cada módulo. Nesse arquivo, importe o módulo a ser exportado e depois exporte.  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```javascript
+import { FormularioCadastro } from "./FormularioCadastro";
+export default FormularioCadastro
+```
 
-### Analyzing the Bundle Size
+Para utilizar, como o padrão do import e procurar por um index.js, não precisamos colocar o index no final do caminho do import:  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```javascript
+import FormularioCadastro from "./components/FormularioCadastro";
+```
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
