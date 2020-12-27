@@ -111,4 +111,22 @@ Para utilizar, como o padrão do import e procurar por um index.js, não precisa
 import FormularioCadastro from "./components/FormularioCadastro";
 ```
 
+## THIS
+Como o this tem escopo léxico (dinâmico), sempre que for adicionar uma função em uma classe no React, adicione um bind.  
+O bind vincula o método ao contexto que ele deve ser executado, por exemplo, uma função a uma classe:  
+
+```jsx
+export class FormularioCadastro extends Component {
+//...
+handleMudancaTitulo(event) {
+        this.titulo = event.target.value
+        console.log(this.titulo)
+    }
+//...
+<input
+    type="text"
+    placeholder="Título"
+    onChange={this.handleMudancaTitulo.bind(this)} //vinculará o this a classe FormularioCadastro
+/>
+```
 
