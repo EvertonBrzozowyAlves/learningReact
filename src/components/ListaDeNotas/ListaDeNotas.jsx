@@ -2,14 +2,18 @@ import React, { Component } from 'react'
 import CardNota from '../CardNota/'
 
 export class ListaDeNotas extends Component {
+    constructor(props) {
+        super(props)
+    }
+
     render() {
         return (
             <ul>
-                {Array.of("Trabalho", "Trabalho", "Estudo").map((categoria, indice) => {
+                {this.props.notas.map((nota, indice) => {
+                    console.log(nota)
                     return (
                         <li key={indice}>
-                            <div>{categoria}</div>
-                            <CardNota />
+                            <CardNota titulo={nota.titulo} texto={nota.texto} />
                         </li>
                     )
                 })}

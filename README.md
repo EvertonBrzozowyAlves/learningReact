@@ -130,3 +130,24 @@ handleMudancaTitulo(event) {
 />
 ```
 
+## State
+O estado do componente é o que determina se esse componente deve ser renderizado novamente na tela ou não.  
+Quando o estado é alterado, o elemento deve ser renderizado novamente.  
+
+```jsx
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      notas: [] //estado inicial
+    }
+  }
+  criarNota(titulo, texto) {
+    const novaNota = { titulo, texto }
+    const novoArrayNotas = [...this.state.notas, novaNota] //concatenando itens anteriores com novos
+    const novoEstado = {
+      notas: novoArrayNotas
+    }
+    this.setState(novoEstado) //aqui definimos um novo estado para o componente, que irá atualizar a tela
+  }
+```
